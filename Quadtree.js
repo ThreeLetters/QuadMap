@@ -61,18 +61,23 @@ setnode(id,node) {
     var newq = this.createQuadAtPoint(node[this.positionkey].x)
     if (!newq) return false;
     this.quads.push(newq);
-    newq.nodes.set(id,node);
-    this.reSort();
+     if (!node.QTree) {
+  newq.nodes.set(id,node);
+  node.QTree = this;
   } else {
-  
+    node.QTree.relocate(node,newq);
+  }
+    this.nodes.forEach((node)=>{if (newq.doesFit(node[newq.positionkey])) this.relocate(node,quad)})
+  } else {
+  if (!node.QTree) {
   this.nodes.set(id,node);
+  node.QTree = this;
+  } else {
+    node.QTree.relocate(node,this);
+  }
   }
 }
-reSort() {
-  
-  
-  
-}
+
 doesFit(position) {
   var x = position.x;
   var y = position.y;
