@@ -22,10 +22,43 @@ doesFit(position) {
   return true;
   
 }
+doesFitBox(box) {
+  var top = box.top
+  var bottom = box.bottom
+  var left = box.left
+  var right = box.right
+  if (box.top >= this.top) return false;
+  if (box.bottom < this.bottom) return false;
+  if (box.left >= this.left) return false;
+  if (box.right < this.right) return false;
+  return true;
+}
 getQuad(node,box) {
-  if (!node[this.positionkey]) return false;
-  this.doesFit(node[this.positionkey])
   
+  if (box) {
+    if (this.doesFitBox(box)) {
+    var quad = this;
+    for (;0==0;) {
+      
+      
+      
+    }
+    } else return false;
+  } else {
+    if (!node[this.positionkey]) return false;
+  if (this.doesFit(node[this.positionkey])) {
+    var quad = this;
+    for (;1==1;) {
+      if (quad.quads.length <= 0) return quad;
+      for (var i in quad.quads) {
+        
+        if (quad.quads[i].doesFit(node[this.positionkey])) quad = quad.quads[i];
+        
+      }
+    }
+  } else return false;
+  
+  }
 }
 
 
