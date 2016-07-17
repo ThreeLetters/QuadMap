@@ -14,8 +14,16 @@ this.allnodes = new FastMap();
 this.positionkey = (!positkey && parent.positionkey) ? parent.positionkey : positkey;
 
 }
-getNodes() {
-  
+
+getNodes(progressive) {
+  var final = new FastMap();
+  if (progressive) {
+    this.nodes.forEach((node,id)=>{
+      final.set(id,node.node);
+      
+    })
+    
+  }
   
 }
 setNode(id,node) {
