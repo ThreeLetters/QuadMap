@@ -18,6 +18,16 @@ setNode(id,node) {
   var quad = this.getQuad(node)
  return quad.setnode(id,node);
 }
+getAveragePoint(nodes) {
+  var xs = 0;
+  var ys = 0;
+  nodes.forEach((node)=>{
+   var pos = node.node[this.positionkey]
+    xs += pos.x;
+    ys += pos.y;
+  })
+  return {x: Math.round(xs/2), y: Math.round(ys/2)};
+}
 createQuadAtPoint(pos) {
   var test = function(pos) {
   var quadholder = class quadholder{
@@ -65,7 +75,8 @@ compile(node) {
 }
 setnode(id,node) {
   if (this.nodes.length + this.quads.length >= 4) {
-    var newq = this.createQuadAtPoint(node[this.positionkey].x)
+    
+    var newq = this.createQuadAtPoint(this.getAveragePoint(this.nodes));
     if (!newq) return false;
     this.quads.push(newq);
     if (node.compiled)
