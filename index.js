@@ -1,33 +1,43 @@
 var positionkey = "position";
-module.exports = {
-  get: function(key) {
+var QuadTree = require('./Quadtree.js');
+var quadtree = new QuadTree()
+module.exports = class QuadTreeMap {
+  constructor(top,bottom,left,right) {
     
     
-  },
-  set: function(key,data) {
+  }
+  get(key) {
     
     
-  },
-  forEach: function(callback) {
+  }
+  set(key,data) {
     
     
-  },
-  every: function(callback) {
+  }
+  forEach(callback) {
     
     
-  },
-  keys: function() {
+  }
+  every(callback) {
     
     
-  },
-  getQuad: function(node) {
+  }
+  keys() {
     
     
-  },
-  setPosVar: function(var) {
+  }
+  getQuad(node) {
     
     
-  },
+  }
+  setPosVar(var) {
+    
+    
+  }
+  reSort() {
+    
+    
+  }
   
   
   
