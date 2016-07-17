@@ -38,10 +38,21 @@ getQuad(node,box) {
   if (box) {
     if (this.doesFitBox(box)) {
     var quad = this;
+    var prevquad = [];
     for (;0==0;) {
-      
-      
-      
+      if (!quad) return false;
+      if (quad.quads.length <= 0) return quad;
+      prevquad = quad;
+      for (var i in quad.quads) {
+      if (quad.quads[i].doesFitBox(box)) {
+        quad = quad.quads[i];
+        
+        
+      }  
+        
+        
+      }
+      if (quad == prevquad) return prevquad;
     }
     } else return false;
   } else {
@@ -49,6 +60,7 @@ getQuad(node,box) {
   if (this.doesFit(node[this.positionkey])) {
     var quad = this;
     for (;1==1;) {
+      if (!quad) return false;
       if (quad.quads.length <= 0) return quad;
       for (var i in quad.quads) {
         
