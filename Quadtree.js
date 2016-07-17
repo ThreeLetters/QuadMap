@@ -16,7 +16,7 @@ this.positionkey = (!positkey && parent.positionkey) ? parent.positionkey : posi
 setNode(id,node) {
   if (this.level == 0) this.allnodes.set(id,node);
   var quad = this.getQuad(node)
-  quad.setnode(id,node);
+ return quad.setnode(id,node);
 }
 createQuadAtPoint(pos) {
   var test = function(pos) {
@@ -56,28 +56,56 @@ this.right = right;
   var newq = new QTree(quad.top,quad.bottom,quad,left,quad.right,this.level + 1,this);
   return newq;
 }
+compile(node) {
+  return {
+    QTree: false,
+    node: node,
+    compiled: true,
+  };
+}
 setnode(id,node) {
   if (this.nodes.length + this.quads.length >= 4) {
     var newq = this.createQuadAtPoint(node[this.positionkey].x)
     if (!newq) return false;
     this.quads.push(newq);
-     if (!node.QTree) {
-  newq.nodes.set(id,node);
-  node.QTree = this;
+    if (node.compiled)
+      newq.seto(id,node); else
+    newq.setn(id,node);
+    this.nodes.forEach((node)=>{if (newq.doesFit(node.node[newq.positionkey])) this.relocate(id,node,quad)});
+    return newq;
   } else {
-    node.QTree.relocate(node,newq);
-  }
-    this.nodes.forEach((node)=>{if (newq.doesFit(node[newq.positionkey])) this.relocate(node,quad)})
-  } else {
-  if (!node.QTree) {
-  this.nodes.set(id,node);
-  node.QTree = this;
-  } else {
-    node.QTree.relocate(node,this);
-  }
+    if (node.compiled) 
+      this.seto(id,node);
+    else
+  this.setn(id,node);
+  return this;
   }
 }
+seto(id,node) {
+  if (node.QTree) {
+    node.QTree.nodes.delete(id);
+  }
+  node.QTree = this;
+  this.nodes.set(id,node);
+}
+setn(id,node) {
+  return this.nodes.set(id,this.compile(node,this));
+}
+relocate(id,node,quad) {
+  this.nodes.delete(id);
+ return quad.setnode(id,node);
+}
+hasItem(id) {
+  return this.nodes.has(id);
+}
 
+updatePos(id) {
+  if (this.level != 0) return false;
+ var node = this.allnodes.get(id);
+ if (!node) return false;
+    var quad = this.getQuad(node);
+    
+}
 doesFit(position) {
   var x = position.x;
   var y = position.y;
