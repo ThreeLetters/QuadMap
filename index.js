@@ -30,6 +30,9 @@ module.exports = class QuadTreeMap {
     
     return this.quadtree.keys();
   }
+  getQuadBox(box) {
+    return this.quadtree.getQuad(null,box)
+  }
   getQuad(node) {
    return this.quadtree.getQuad(node)
     
