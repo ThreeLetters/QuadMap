@@ -2,7 +2,7 @@
 const FastMap = require('collections/fast-map');
 
 var QTree = class QuadTree {
-constructor(top,bottom,left,right, level,parent,numb,positkey) {
+constructor(top,bottom,left,right, level,parent,numb,config) {
 this.top = top;
 this.bottom = bottom;
 this.numb = numb;
@@ -10,8 +10,8 @@ this.left = left;
 this.right = right;
 this.quads = new FastMap();
 this.nodes = new FastMap();
+this.config = config;
 this.allnodes = new FastMap();
-this.positionkey = (!positkey && parent.positionkey) ? parent.positionkey : positkey;
 
 }
 
@@ -72,7 +72,7 @@ getAverageQuad(nodes) {
   }
   var list = [];
   nodes.forEach((node)=>{
-   var pos = node.node[this.positionkey]
+   var pos = node.node[this.config.positionkey]
   list.push(test(pos))c;
   });
   
@@ -114,7 +114,7 @@ this.right = right;
   }
   var quad = test(pos);
   if (!quad || this.quads.has(quad.numb)) return false;
-  var newq = new QTree(quad.top,quad.bottom,quad.left,quad.right,this.level + 1,this,quad.numb);
+  var newq = new QTree(quad.top,quad.bottom,quad.left,quad.right,this.level + 1,this,quad.numb,this.config);
   return newq;
 }
 compile(node,qtree) {
@@ -269,15 +269,15 @@ getQuad(node,box) {
     } else return false;
   } else {
     if (node.compiled) node = node.node;
-    if (!node[this.positionkey]) return false;
-  if (this.doesFit(node[this.positionkey])) {
+    if (!node[this.config.positionkey]) return false;
+  if (this.doesFit(node[this.config.positionkey])) {
     var quad = this;
     for (;1==1;) {
       if (!quad) return false;
       if (quad.quads.length <= 0) return quad;
      quad.quads.forEach((quada)=>{
         
-        if (quada.doesFit(node[this.positionkey])) quad = quada;
+        if (quada.doesFit(node[this.config.positionkey])) quad = quada;
         
       });
     }
