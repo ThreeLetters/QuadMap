@@ -2,12 +2,13 @@
 const FastMap = require('collections/fast-map');
 
 var QTree = class QuadTree {
-constructor(top,bottom,left,right, level,parent,positkey) {
+constructor(top,bottom,left,right, level,parent,numb,positkey) {
 this.top = top;
 this.bottom = bottom;
+this.numb = numb;
 this.left = left;
 this.right = right;
-this.quads = [];
+this.quads = new FastMap();
 this.nodes = new FastMap();
 this.allnodes = new FastMap();
 this.positionkey = (!positkey && parent.positionkey) ? parent.positionkey : positkey;
@@ -67,8 +68,9 @@ getAverageQuad(nodes) {
 createQuad(number) {
   var test = function(pos) {
   var quadholder = class quadholder{
-    constructor(top,bottom,left,right) {
+    constructor(top,bottom,left,right,numb) {
 this.top = top;
+this.numb = numb;
 this.bottom = bottom;
 this.left = left;
 this.right = right;
@@ -87,19 +89,19 @@ this.right = right;
   
   var vert = Math.floor((this.left + this.right) / 2);
   var hor = Math.floor((this.top + this.bottom) / 2)
-  var one = new quadholder(this.top,hor,vert,this.right);
+  var one = new quadholder(this.top,hor,vert,this.right,1);
   if (number == 1) return one;
-  var one = new quadholder(this.top,hor,this.left,vert);
+  var one = new quadholder(this.top,hor,this.left,vert,2);
  if (number == 2) return one;
-  var one = new quadholder(hor,this.bottom,this.left,vert);
+  var one = new quadholder(hor,this.bottom,this.left,vert,3);
  if (number == 3) return one;
-  var one = new quadholder(hor,this.bottom,vert,this.right);
+  var one = new quadholder(hor,this.bottom,vert,this.right,4);
  if (number == 4) return one;
   return false;
   }
   var quad = test(pos);
-  if (!quad) return false;
-  var newq = new QTree(quad.top,quad.bottom,quad,left,quad.right,this.level + 1,this);
+  if (!quad || this.quads.has(quad.numb)) return false;
+  var newq = new QTree(quad.top,quad.bottom,quad.left,quad.right,this.level + 1,this,quad.numb);
   return newq;
 }
 compile(node) {
@@ -114,7 +116,7 @@ setnode(id,node) {
     
     var newq = this.createQuad(this.getAverageQuad(this.nodes));
     if (!newq) return false;
-    this.quads.push(newq);
+    this.quads.set(newq.numb,newq);
     if (node.compiled)
       newq.seto(id,node); else
     newq.setn(id,node);
@@ -127,6 +129,12 @@ setnode(id,node) {
   this.setn(id,node);
   return this;
   }
+}
+check() {
+  if (this.nodes.length + this.quads.length <= 4) return true; 
+   var newq = this.createQuad(this.getAverageQuad(this.nodes));
+
+  
 }
 seto(id,node) {
   if (node.QTree) {
@@ -184,15 +192,15 @@ getQuad(node,box) {
       if (!quad) return false;
       if (quad.quads.length <= 0) return quad;
       prevquad = quad;
-      for (var i in quad.quads) {
-      if (quad.quads[i].doesFitBox(box)) {
-        quad = quad.quads[i];
+      quad.quads.forEach((quada)=>{
+      if (quada].doesFitBox(box)) {
+        quad = quada;
         
         
       }  
         
         
-      }
+      });
       if (quad == prevquad) return prevquad;
     }
     } else return false;
@@ -203,11 +211,11 @@ getQuad(node,box) {
     for (;1==1;) {
       if (!quad) return false;
       if (quad.quads.length <= 0) return quad;
-      for (var i in quad.quads) {
+     quad.quads.forEach((quada)=>{
         
-        if (quad.quads[i].doesFit(node[this.positionkey])) quad = quad.quads[i];
+        if (quada.doesFit(node[this.positionkey])) quad = quada;
         
-      }
+      });
     }
   } else return false;
   
