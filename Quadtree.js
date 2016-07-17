@@ -19,8 +19,13 @@ getNodes() {
   
 }
 setNode(id,node) {
-  if (this.level == 0) this.allnodes.set(id,node);
+  var compiled = false;
+  if (this.level == 0) {
+    compiled = this.compile(node,this);
+    this.allnodes.set(id,compiled);
+  }
   var quad = this.getQuad(node)
+  if (compiled) node = compiled;
  return quad.setnode(id,node);
 }
 getAverageQuad(nodes) {
@@ -104,9 +109,9 @@ this.right = right;
   var newq = new QTree(quad.top,quad.bottom,quad.left,quad.right,this.level + 1,this,quad.numb);
   return newq;
 }
-compile(node) {
+compile(node,qtree) {
   return {
-    QTree: false,
+    QTree: qtree,
     node: node,
     compiled: true,
   };
@@ -121,33 +126,83 @@ setnode(id,node) {
       newq.seto(id,node); else
     newq.setn(id,node);
     this.nodes.forEach((node)=>{if (newq.doesFit(node.node[newq.positionkey])) this.relocate(id,node,quad)});
+    this.checkForOthers()
     return newq;
   } else {
     if (node.compiled) 
       this.seto(id,node);
     else
   this.setn(id,node);
+  this.checkForOthers();
   return this;
   }
 }
-check() {
+destroy() {
+  
+  this.nodes.forEach((node,id)=>{
+    this.parent.setNode(id,node);
+    
+  })
+  this.parent.destroyQuad(this.numb);
+}
+
+removeNode(id,progressive) {
+  if (this.level == 0) this.allnodes.delete(id);
+  this.nodes.delete(id);
+ 
+  checkForRemoval();
+  if (progressive) {
+    this.quads.forEach((quad)=>{quad.removeNode(id,true)});
+  } 
+}
+destroyQuadNumb(num) {
+  this.quads.delete(num);
+  
+}
+checkForRemoval() {
+  var check = function() {
+   if (this.parent.nodes.length + this.parent.quads.length + this.nodes.length - 1 <= 4 && this.quads.length <= 0 && this.level != 0) {
+      this.destroy()
+      return;
+    }
+  }
+  check();
+}
+checkForOthers() {
+  var check = function() {
+   
   if (this.nodes.length + this.quads.length <= 4) return true; 
    var newq = this.createQuad(this.getAverageQuad(this.nodes));
-
-  
+   this.quads.set(newq.numb,newq);
+    this.nodes.forEach((node)=>{if (newq.doesFit(node.node[newq.positionkey])) this.relocate(id,node,quad)});
+ 
+  if (this.nodes.length + this.quads.length > 4) check();
+  }
 }
 seto(id,node) {
   if (node.QTree) {
-    node.QTree.nodes.delete(id);
+    node.QTree.removeNode(id);
   }
   node.QTree = this;
   this.nodes.set(id,node);
 }
+stmasit(id,com) {
+  if (!this.parent && this.level != 0) return false;
+  if (!this.parent && this.level == 0) {
+    this.allnodes.set(id,com);
+    
+  }
+  
+  this.parent.stmasit(id,com);
+}
 setn(id,node) {
-  return this.nodes.set(id,this.compile(node,this));
+ var co = this.compile(node,this)
+  if (this.level != 0) this.stmasit(co) else this.allnodes.set(id,co);
+  
+  return this.nodes.set(id,co);
 }
 relocate(id,node,quad) {
-  this.nodes.delete(id);
+  this.removeNode(id);
  return quad.setnode(id,node);
 }
 hasItem(id) {
@@ -159,7 +214,7 @@ updatePos(id) {
  var node = this.allnodes.get(id);
  if (!node) return false;
     var quad = this.getQuad(node);
-    
+    node.QTree.relocate(id,node,quad);
 }
 doesFit(position) {
   var x = position.x;
@@ -205,6 +260,7 @@ getQuad(node,box) {
     }
     } else return false;
   } else {
+    if (node.compiled) node = node.node;
     if (!node[this.positionkey]) return false;
   if (this.doesFit(node[this.positionkey])) {
     var quad = this;
