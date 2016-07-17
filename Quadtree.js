@@ -13,22 +13,58 @@ this.allnodes = new FastMap();
 this.positionkey = (!positkey && parent.positionkey) ? parent.positionkey : positkey;
 
 }
+getNodes() {
+  
+  
+}
 setNode(id,node) {
   if (this.level == 0) this.allnodes.set(id,node);
   var quad = this.getQuad(node)
  return quad.setnode(id,node);
 }
-getAveragePoint(nodes) {
-  var xs = 0;
-  var ys = 0;
+getAverageQuad(nodes) {
+ var mode = function(array)
+{
+    if(array.length == 0)
+    	return null;
+    var modeMap = {};
+    var maxEl = array[0], maxCount = 1;
+    for(var i = 0; i < array.length; i++)
+    {
+    	var el = array[i];
+    	if(modeMap[el] == null)
+    		modeMap[el] = 1;
+    	else
+    		modeMap[el]++;	
+    	if(modeMap[el] > maxCount)
+    	{
+    		maxEl = el;
+    		maxCount = modeMap[el];
+    	}
+    }
+    return maxEl;
+}
+  var test = function(pos) {
+    
+  
+   var vert = Math.floor((this.left + this.right) / 2);
+  var hor = Math.floor((this.top + this.bottom) / 2)
+    if (pos.x >= vert && pos.y >= hor) return 1;
+      if (pos.x < vert && pos.y >= hor) return 2;
+      if (pos.x < vert && pos.y < hor) return 3;
+      if (pos.x >= vert && pos.y < hor) return 4;
+    return false;
+    
+  }
+  var list = [];
   nodes.forEach((node)=>{
    var pos = node.node[this.positionkey]
-    xs += pos.x;
-    ys += pos.y;
-  })
-  return {x: Math.round(xs/2), y: Math.round(ys/2)};
+  list.push(test(pos))c;
+  });
+  
+  return mode(list); 
 }
-createQuadAtPoint(pos) {
+createQuad(number) {
   var test = function(pos) {
   var quadholder = class quadholder{
     constructor(top,bottom,left,right) {
@@ -52,13 +88,13 @@ this.right = right;
   var vert = Math.floor((this.left + this.right) / 2);
   var hor = Math.floor((this.top + this.bottom) / 2)
   var one = new quadholder(this.top,hor,vert,this.right);
-  if (one.doesFit(pos)) return one;
+  if (number == 1) return one;
   var one = new quadholder(this.top,hor,this.left,vert);
-  if (one.doesFit(pos)) return one;
+ if (number == 2) return one;
   var one = new quadholder(hor,this.bottom,this.left,vert);
-  if (one.doesFit(pos)) return one;
+ if (number == 3) return one;
   var one = new quadholder(hor,this.bottom,vert,this.right);
-  if (one.doesFit(pos)) return one;
+ if (number == 4) return one;
   return false;
   }
   var quad = test(pos);
@@ -76,7 +112,7 @@ compile(node) {
 setnode(id,node) {
   if (this.nodes.length + this.quads.length >= 4) {
     
-    var newq = this.createQuadAtPoint(this.getAveragePoint(this.nodes));
+    var newq = this.createQuad(this.getAverageQuad(this.nodes));
     if (!newq) return false;
     this.quads.push(newq);
     if (node.compiled)
