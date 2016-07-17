@@ -10,7 +10,10 @@ this.right = right;
 
 
 }
-
+getQuad(node) {
+  
+  
+}
 
 
 
