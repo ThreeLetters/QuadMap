@@ -18,10 +18,24 @@ getNodesWithQuadData
 getNodes(progressive) {
   var final = new FastMap();
   if (progressive) {
-    this.getInnQuads(final);
-    return final
+    this.walk().forEach((node,id)=>{
+final.set(id,node);
+})
+return final;
   }
   
+}
+walk() {
+var walk = function(){
+var list = this.nodes;
+this.quads.forEach((quad)=>{
+list.concat(quad.walk())
+});
+
+
+return list;
+}
+return walk();
 }
 getInnQuads(result) {
   this.nodes.forEach((node)=>{
