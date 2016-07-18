@@ -39,6 +39,12 @@ set(id,node) {
 getNodes(progressive,keep) {
   var final = new FastMap();
   if (progressive) {
+   if (this.level == 0) {
+    if (keep) final = this.allnodes; else final = this.allNodes;
+    return final;
+    
+    
+   }
    if (keep) final = this.walk(); else this.walk().forEach((node,id)=>{
 final.set(id,node.node);
 });
