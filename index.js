@@ -48,8 +48,8 @@ module.exports = class QuadTreeMap {
    return this.quadtree.getQuad(node)
     
   }
-  setPosVar(var) {
-    return this.config.positionkey = var;
+  setPosVar(va) {
+    return this.config.positionkey = va;
     
   }
   reSort() {
