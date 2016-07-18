@@ -342,7 +342,7 @@ doesFitBox(box) {
 getquad(pos,box) {
  var quad = [];
 var test = (box) ? this.doesFitBox(box) : this.doesFit(pos);
- if (!test) return false;
+ if (!test && this.level != 0) return false;
  this.quads.forEach((quad)=>{
   var aquad = quad.getquad(pos,box)
   if (aquad) return aquad
