@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 const FastMap = require('collections/fast-map');
 
 var QTree = class QuadTree {
@@ -307,7 +307,7 @@ getQuad(node,box) {
       if (quad.quads.length <= 0) return quad;
       prevquad = quad;
       quad.quads.forEach((quada)=>{
-      if (quada].doesFitBox(box)) {
+      if (quada.doesFitBox(box)) {
         quad = quada;
         
         
