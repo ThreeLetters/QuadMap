@@ -1,4 +1,4 @@
-
+"use strict"
 var QuadTree = require('./Quadtree.js');
 
 module.exports = class QuadTreeMap {
