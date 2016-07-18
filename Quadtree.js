@@ -30,17 +30,17 @@ this.allnodes = new FastMap();
 this.allNodes = new FastMap();
 }
 
-getNodes(progressive) {
+getNodes(progressive,keep) {
   var final = new FastMap();
   if (progressive) {
-    this.walk().forEach((node,id)=>{
+   if (keep) final = this.walk(); else this.walk().forEach((node,id)=>{
 final.set(id,node.node);
-})
+});
 return final;
   } else {
-   this.nodes.forEach((node,id)=>{
+   if (keep) final = this.nodes; else this.nodes.forEach((node,id)=>{
 final.set(id,node.node);
-})
+});
 return final;
    
   }
