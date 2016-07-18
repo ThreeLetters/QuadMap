@@ -10,7 +10,8 @@ module.exports = class QuadTreeMap {
     
     this.config = {
       maxBounds: 12,
-      this.positionkey = "position",
+      positionkey: "position",
+      useQuad: true,
     }
     this.quadtree = new QuadTree(top,bottom,left,right,0,false,0,this.config);
   }
