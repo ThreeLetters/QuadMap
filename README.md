@@ -1,2 +1,6 @@
 # QuadTreeMap
-A map-styled quadtree
+A map-styled quadtree.
+
+
+## Documentation
+
