@@ -31,8 +31,12 @@ module.exports = class QuadTreeMap {
     this.quadtree = new QuadTree(top,bottom,left,right,0,false,0,this.config);
   }
   get(key) {
+    return this.quadtree.get(key);
     
-    
+  }
+  getNodes(progres,keep) {
+   return this.quadtree.getNodes(progres,keep);
+   
   }
   setPower(state) {
     this.useQuad = state
