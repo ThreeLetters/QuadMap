@@ -21,6 +21,8 @@ constructor(top,bottom,left,right, level,parent,numb,config) {
 this.top = top;
 this.bottom = bottom;
 this.numb = numb;
+this.level = level;
+this.parent = parent;
 this.left = left;
 this.right = right;
 this.quads = new FastMap();
