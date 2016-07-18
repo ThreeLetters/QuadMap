@@ -1,4 +1,4 @@
-# QuadTreeMap
+# QuadMap
 A map-styled quadtree. (uses collections/fast-map)
 
 
