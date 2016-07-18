@@ -33,7 +33,9 @@ get(id) {
  if (this.level == 0) return this.allnodes.get(id)
  return this.nodes.get(id);
 }
-
+set(id,node) {
+ return this.setNode(id,node)
+}
 getNodes(progressive,keep) {
   var final = new FastMap();
   if (progressive) {
