@@ -14,7 +14,7 @@
     "quadtree",
     "map"
   ],
-  "dependancies": {
+  "dependencies": {
     "collections": "latest"
     
   },
