@@ -29,6 +29,10 @@ this.config = config;
 this.allnodes = new FastMap();
 this.allNodes = new FastMap();
 }
+get(id) {
+ if (this.level == 0) return this.allnodes.get(id)
+ return this.nodes.get(id);
+}
 
 getNodes(progressive,keep) {
   var final = new FastMap();
