@@ -117,6 +117,24 @@ this.right = right;
   var newq = new QTree(quad.top,quad.bottom,quad.left,quad.right,this.level + 1,this,quad.numb,this.config);
   return newq;
 }
+resize(top,bottom,left,right) {
+  this.top = top;
+  this.bottom = bottom;
+  this.left = left;
+  this.right = right;
+  
+this.reSort();
+}
+reSort() {
+  this.clear(true);
+  this.allnodes.forEach((node,id)=>{this.setNode(id,node)});
+}
+clear(c) {
+  this.quads.clear();
+  this.nodes.clear();
+  this.allnodes.forEach((node)=>{node.QTree = this;});
+  if (!c) this.allnodes.clear();
+}
 compile(node,qtree) {
   return {
     QTree: qtree,
