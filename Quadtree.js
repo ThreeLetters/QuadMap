@@ -32,8 +32,10 @@ this.allnodes = new FastMap();
 this.allNodes = new FastMap();
 }
 get(id) {
- if (this.level == 0) return this.allnodes.get(id)
- return this.nodes.get(id);
+ if (this.level == 0) return this.allNodes.get(id)
+ var node = this.nodes.get(id);
+if (node) return node.node
+return false;
 }
 set(id,node) {
  return this.setNode(id,node)
@@ -85,14 +87,16 @@ setNode(id,node) {
 
   var compiled = false;
   if (this.level == 0) {
-    compiled = this.compile(node,this);
+    compiled = (node.compiled) ? node : this.compile(node,this);
     this.allnodes.set(id,compiled);
-    this.allNodes.set(id,node);
+   if (!node.compiled) this.allNodes.set(id,node);
     if (!this.config.useQuad) return;
   }
   var quad = this.getQuad(node)
   if (compiled) node = compiled;
- return quad.setnode(id,node);
+setTimeout(function () { 
+ quad.setnode(id,node);
+}.bind(this),Math.floor(Math.random * 100));
 }
 getAverageQuad(nodes) {
  var mode = function(array)
@@ -117,6 +121,7 @@ getAverageQuad(nodes) {
     return maxEl;
 }
   var testa = function(pos) {
+
   
    var vert = Math.floor((this.left + this.right) / 2);
   var hor = Math.floor((this.top + this.bottom) / 2)
@@ -132,7 +137,7 @@ getAverageQuad(nodes) {
    var pos = node.node[this.config.positionkey]
   list.push(testa(pos));
   });
-  
+
   return mode(list); 
 }
 createQuad(number) {
@@ -201,8 +206,7 @@ compile(node,qtree) {
   };
 }
 setnode(id,node) {
-  if (this.nodes.length + this.quads.length >= 4 && this.level < this.config.maxQuad) {
-    
+  if (this.nodes.length + this.quads.length >= 4 && this.nodes.length > 0 && this.level < this.config.maxQuad) {
     var newq = this.createQuad(this.getAverageQuad(this.nodes));
     if (!newq) return false;
     this.quads.set(newq.numb,newq);
@@ -240,13 +244,10 @@ deleteNode(id) {
   }
   this.removeNode(id,true);
   
-  
+      this.allnodes.delete(id);
+   this.allNodes.delete(id);
 }
 removeNode(id,progressive) {
-  if (this.level == 0) {
-    this.allnodes.delete(id);
-   this.allNodes.delete(id);
-  }
   this.nodes.delete(id);
  
   this.checkForRemoval();
@@ -259,18 +260,16 @@ destroyQuadNumb(num) {
   
 }
 checkForRemoval() {
-  var check = function() {
+if (this.level == 0) return;
    if (this.parent.nodes.length + this.parent.quads.length + this.nodes.length - 1 <= 4 && this.quads.length <= 0 && this.level != 0) {
       this.destroy()
       return;
     }
-  }.bind(this)
- if (this.level != 0) check();
 }
 checkForOthers() {
   var check = function() {
    
-  if (this.nodes.length + this.quads.length <= 4 || this.level < this.config.maxQuad) return true; 
+  if (this.nodes.length + this.quads.length <= 4 || this.nodes.length <= 0 || this.level < this.config.maxQuad) return true; 
    var newq = this.createQuad(this.getAverageQuad(this.nodes));
    this.quads.set(newq.numb,newq);
     this.nodes.forEach((node)=>{if (newq.doesFit(node.node[this.config.positionkey])) this.relocate(id,node,newq)});
@@ -304,7 +303,7 @@ setn(id,node) {
 }
 relocate(id,node,quad) {
   this.removeNode(id);
- return quad.setnode(id,node);
+ return quad.setNode(id,node);
 }
 hasItem(id) {
   return this.nodes.has(id);
@@ -315,6 +314,7 @@ updatePos(id) {
  var node = this.allnodes.get(id);
  if (!node) return false;
     var quad = this.getQuad(node);
+if (quad != node.QTree)
     node.QTree.relocate(id,node,quad);
 }
 doesFit(position) {
