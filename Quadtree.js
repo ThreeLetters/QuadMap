@@ -14,16 +14,25 @@ this.config = config;
 this.allnodes = new FastMap();
 this.allNodes = new FastMap();
 }
-
+getNodesWithQuadData
 getNodes(progressive) {
   var final = new FastMap();
   if (progressive) {
-    this.nodes.forEach((node,id)=>{
-      final.set(id,node.node);
-      
-    })
-    
+    this.getInnQuads(final);
+    return final
   }
+  
+}
+getInnQuads(result) {
+  this.nodes.forEach((node)=>{
+    result.set(id,node)
+    
+  })
+  this.quads.forEach((quad)=>{
+    quad.getInnQuads(result)
+    
+    
+  })
   
 }
 setNode(id,node) {
