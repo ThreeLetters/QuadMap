@@ -34,6 +34,7 @@ module.exports = class QuadTreeMap {
     return this.quadtree.get(key);
     
   }
+  
   getNodes(progres,keep) {
    return this.quadtree.getNodes(progres,keep);
    
