@@ -264,7 +264,7 @@ checkForRemoval() {
       this.destroy()
       return;
     }
-  }
+  }.bind(this)
  if (this.level != 0) check();
 }
 checkForOthers() {
