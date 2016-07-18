@@ -11,3 +11,6 @@ set(key,node)                |  Insert an item by a key
 getNodes(progressive,include)|  Get nodes the nodes in a Quad
 useQuad(state)               |  Wether to use the quad-system or not
 setMaxLevel(number)          |  Maximum amount of levels
+forEach(callback)            |  forEach
+every(callback)              |  every
+keys()                       |  Get all the keys
