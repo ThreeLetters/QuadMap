@@ -34,9 +34,17 @@ module.exports = class QuadMap {
     return this.quadtree.get(key);
     
   }
-  
+  updatePos(id) {
+   return this.quadtree.updatePos(id);
+  }
   getNodes(progres,keep) {
    return this.quadtree.getNodes(progres,keep);
+   
+  }
+  updateAllPos() {
+   this.quadtree.allnodes.keys().forEach((key)=>{
+    this.updatePos(key);
+   })
    
   }
   useQuad(state) {
