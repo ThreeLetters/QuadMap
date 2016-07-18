@@ -39,7 +39,7 @@ module.exports = class QuadTreeMap {
    return this.quadtree.getNodes(progres,keep);
    
   }
-  setPower(state) {
+  useQuad(state) {
     this.useQuad = state
   }
   setMaxBound(numb) {
