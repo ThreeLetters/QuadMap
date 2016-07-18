@@ -22,7 +22,6 @@ module.exports = class QuadMap {
     this.bottom = bottom;
     this.left = left;
     this.right = right;
-    
     this.config = {
       maxQuad: 12,
       positionkey: "position",
@@ -34,6 +33,21 @@ module.exports = class QuadMap {
     return this.quadtree.get(key);
     
   }
+  toArray() {
+
+return this.quadtree.allNodes.toArray();
+}
+delete(id) {
+
+return this.quadtree.delete(id);
+
+}
+clear(a) {
+return this.quadtree.clear(a)
+
+
+}
+
   updatePos(id) {
    return this.quadtree.updatePos(id);
   }
