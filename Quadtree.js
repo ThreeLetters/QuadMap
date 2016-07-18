@@ -26,7 +26,6 @@ return final;
   
 }
 walk() {
-var walk = function(){
 var list = this.nodes;
 this.quads.forEach((quad)=>{
 list.concat(quad.walk())
@@ -34,8 +33,6 @@ list.concat(quad.walk())
 
 
 return list;
-}
-return walk();
 }
 getInnQuads(result) {
   this.nodes.forEach((node)=>{
@@ -259,7 +256,7 @@ stmasit(id,com) {
 }
 setn(id,node) {
  var co = this.compile(node,this)
-  if (this.level != 0) this.stmasit(co) else this.allnodes.set(id,co);
+  if (this.level != 0) this.stmasit(co); else this.allnodes.set(id,co);
   
   return this.nodes.set(id,co);
 }
