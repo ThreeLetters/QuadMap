@@ -9,7 +9,7 @@ module.exports = class QuadTreeMap {
     this.right = right;
     
     this.config = {
-      maxBounds: 12,
+      maxQuad: 12,
       positionkey: "position",
       useQuad: true,
     }
@@ -19,8 +19,11 @@ module.exports = class QuadTreeMap {
     
     
   }
+  setPower(state) {
+    this.useQuad = state
+  }
   setMaxBound(numb) {
-    this.config.maxBounds = numb
+    this.config.maxQuad = numb;
   }
   set(key,data) {
     
