@@ -1,1 +1,8 @@
 
+
+language: node_js
+node_js:
+  - "5.9.0"
+
+script:
+  node index.js
