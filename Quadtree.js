@@ -80,6 +80,7 @@ getInnQuads(result) {
   
 }
 setNode(id,node) {
+
   var compiled = false;
   if (this.level == 0) {
     compiled = this.compile(node,this);
@@ -190,6 +191,7 @@ clear(c) {
   this.allnodes.forEach((node)=>{node.QTree = this;});
   if (!c) this.allnodes.clear();
 }
+
 compile(node,qtree) {
   return {
     QTree: qtree,
@@ -227,7 +229,8 @@ destroy() {
   this.parent.destroyQuad(this.numb);
 }
 delete(id) {
- return this.deleteNode(id);
+
+return this.deleteNode(id);
 }
 deleteNode(id) {
   if (this.level != 0) {
@@ -328,50 +331,35 @@ doesFitBox(box) {
   var right = box.right
   if (box.top >= this.top) return false;
   if (box.bottom < this.bottom) return false;
-  if (box.left >= this.left) return false;
-  if (box.right < this.right) return false;
+  if (box.left < this.left) return false;
+  if (box.right >= this.right) return false;
   return true;
 }
-getquad(pos) {
+
+getquad(pos,box) {
  var quad = [];
- if (!this.doesFit(pos)) return false;
+var test = (box) ? this.doesFitBox(box) : this.doesFit(pos);
+ if (!test) return false;
  this.quads.forEach((quad)=>{
-  var aquad = quad.getquad(pos)
+  var aquad = quad.getquad(pos,box)
   if (aquad) return aquad
  })
  return this;
+
 }
 getQuad(node,box) {
   
   if (box) {
-    if (this.doesFitBox(box)) {
-    var quad = this;
-    var prevquad = [];
-    for (;0==0;) {
-      if (!quad) return false;
-      if (quad.quads.length <= 0) return quad;
-      prevquad = quad;
-      quad.quads.forEach((quada)=>{
-      if (quada.doesFitBox(box)) {
-        quad = quada;
-        
-        
-      }  
-        
-        
-      });
-      if (quad == prevquad) return prevquad;
-    }
-    } else return false;
+    return this.getquad(false,box);
   } else {
     if (node.compiled) node = node.node;
   return this.getquad(node[this.config.positionkey]);
   
   }
+
+
+
 }
-
-
-
 
 }
 module.exports = QTree;
