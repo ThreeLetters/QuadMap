@@ -54,7 +54,7 @@ module.exports = class QuadTreeMap {
     
   }
   every(callback) {
-    return this.quadtree.allNodes.forEach(callback)
+    return this.quadtree.allNodes.every(callback)
     
   }
   keys() {
