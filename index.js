@@ -26,7 +26,7 @@ module.exports = class QuadTreeMap {
     this.config.maxQuad = numb;
   }
   set(key,data) {
-    this.quadtree.setNode(key,data)
+  return this.quadtree.setNode(key,data)
     
   }
   forEach(callback) {
@@ -53,14 +53,14 @@ module.exports = class QuadTreeMap {
     
   }
   reSort() {
-    this.quadtree.reSort();
+   return this.quadtree.reSort();
   }
   changeBorders(top,bottom,left,right) {
     this.top = top;
     this.bottom = bottom;
     this.left = left;
     this.right = right;
-    this.quadtree.resize(top,bottom,left,right);
+  return this.quadtree.resize(top,bottom,left,right);
   }
   
   
