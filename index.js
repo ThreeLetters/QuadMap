@@ -60,7 +60,7 @@ module.exports = class QuadTreeMap {
     this.bottom = bottom;
     this.left = left;
     this.right = right;
-    this.quadtree.reSort();
+    this.quadtree.resize(top,bottom,left,right);
   }
   
   
