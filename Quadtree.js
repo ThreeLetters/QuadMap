@@ -40,6 +40,12 @@ return false;
 set(id,node) {
  return this.setNode(id,node)
 }
+update() {
+ this.quads.forEach((quad)=>{
+  quad.update();
+ })
+ 
+}
 getNodes(progressive,keep) {
   var final = new FastMap();
   if (progressive) {
@@ -206,24 +212,12 @@ compile(node,qtree) {
   };
 }
 setnode(id,node) {
-  if (this.nodes.length + this.quads.length >= 4 && this.nodes.length > 0 && this.level < this.config.maxQuad) {
-    var newq = this.createQuad(this.getAverageQuad(this.nodes));
-    if (!newq) return false;
-    this.quads.set(newq.numb,newq);
-    if (node.compiled)
-      newq.seto(id,node); else
-    newq.setn(id,node);
-    this.nodes.forEach((node)=>{if (newq.doesFit(node.node[this.config.positionkey])) this.relocate(id,node,newq)});
-    this.checkForOthers()
-    return newq;
-  } else {
+ 
     if (node.compiled) 
       this.seto(id,node);
     else
   this.setn(id,node);
-  this.checkForOthers();
-  return this;
-  }
+
 }
 destroy() {
   
