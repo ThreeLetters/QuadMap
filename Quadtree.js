@@ -250,7 +250,7 @@ removeNode(id,progressive) {
   }
   this.nodes.delete(id);
  
-  checkForRemoval();
+  this.checkForRemoval();
   if (progressive) {
     this.quads.forEach((quad)=>{quad.removeNode(id,true)});
   } 
