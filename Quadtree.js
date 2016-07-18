@@ -329,6 +329,15 @@ doesFitBox(box) {
   if (box.right < this.right) return false;
   return true;
 }
+getquad(pos) {
+ var quad = [];
+ if (!this.doesFit(pos)) return false;
+ this.quads.forEach((quad)=>{
+  var aquad = quad.getquad(pos)
+  if (aquad) return aquad
+ })
+ return this;
+}
 getQuad(node,box) {
   
   if (box) {
@@ -353,19 +362,7 @@ getQuad(node,box) {
     } else return false;
   } else {
     if (node.compiled) node = node.node;
-    if (!node[this.config.positionkey]) return false;
-  if (this.doesFit(node[this.config.positionkey])) {
-    var quad = this;
-    for (;1==1;) {
-      if (!quad) return false;
-      if (quad.quads.length <= 0) return quad;
-     quad.quads.forEach((quada)=>{
-        
-        if (quada.doesFit(node[this.config.positionkey])) quad = quada;
-        
-      });
-    }
-  } else return false;
+  return this.getquad(node[this.config.positionkey]);
   
   }
 }
