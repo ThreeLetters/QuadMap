@@ -226,6 +226,9 @@ destroy() {
   })
   this.parent.destroyQuad(this.numb);
 }
+delete(id) {
+ return this.deleteNode(id);
+}
 deleteNode(id) {
   if (this.level != 0) {
     this.parent.deleteNode(id);
