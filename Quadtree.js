@@ -14,7 +14,7 @@ this.config = config;
 this.allnodes = new FastMap();
 this.allNodes = new FastMap();
 }
-getNodesWithQuadData
+
 getNodes(progressive) {
   var final = new FastMap();
   if (progressive) {
