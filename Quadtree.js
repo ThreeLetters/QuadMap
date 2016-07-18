@@ -32,6 +32,7 @@ setNode(id,node) {
     compiled = this.compile(node,this);
     this.allnodes.set(id,compiled);
     this.allNodes.set(id,node);
+    if (!this.config.useQuad) return;
   }
   var quad = this.getQuad(node)
   if (compiled) node = compiled;
