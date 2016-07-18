@@ -116,8 +116,7 @@ getAverageQuad(nodes) {
     }
     return maxEl;
 }
-  var test = function(pos) {
-    
+  var testa = function(pos) {
   
    var vert = Math.floor((this.left + this.right) / 2);
   var hor = Math.floor((this.top + this.bottom) / 2)
@@ -127,11 +126,11 @@ getAverageQuad(nodes) {
       if (pos.x >= vert && pos.y < hor) return 4;
     return false;
     
-  }
+  }.bind(this)
   var list = [];
   nodes.forEach((node)=>{
    var pos = node.node[this.config.positionkey]
-  list.push(test(pos));
+  list.push(testa(pos));
   });
   
   return mode(list); 
@@ -169,8 +168,8 @@ this.right = right;
   var one = new quadholder(hor,this.bottom,vert,this.right,4);
  if (number == 4) return one;
   return false;
-  }
-  var quad = test(pos);
+  }.bind(this)
+  var quad = test(number);
   if (!quad || this.quads.has(quad.numb)) return false;
   var newq = new QTree(quad.top,quad.bottom,quad.left,quad.right,this.level + 1,this,quad.numb,this.config);
   return newq;
@@ -210,7 +209,7 @@ setnode(id,node) {
     if (node.compiled)
       newq.seto(id,node); else
     newq.setn(id,node);
-    this.nodes.forEach((node)=>{if (newq.doesFit(node.node[newq.positionkey])) this.relocate(id,node,quad)});
+    this.nodes.forEach((node)=>{if (newq.doesFit(node.node[this.config.positionkey])) this.relocate(id,node,newq)});
     this.checkForOthers()
     return newq;
   } else {
@@ -266,7 +265,7 @@ checkForRemoval() {
       return;
     }
   }
-  check();
+ if (this.level != 0) check();
 }
 checkForOthers() {
   var check = function() {
@@ -274,10 +273,12 @@ checkForOthers() {
   if (this.nodes.length + this.quads.length <= 4 || this.level < this.config.maxQuad) return true; 
    var newq = this.createQuad(this.getAverageQuad(this.nodes));
    this.quads.set(newq.numb,newq);
-    this.nodes.forEach((node)=>{if (newq.doesFit(node.node[newq.positionkey])) this.relocate(id,node,quad)});
+    this.nodes.forEach((node)=>{if (newq.doesFit(node.node[this.config.positionkey])) this.relocate(id,node,newq)});
  
   if (this.nodes.length + this.quads.length > 4) check();
-  }
+  }.bind(this)
+
+  check();
 }
 seto(id,node) {
   if (node.QTree) {
