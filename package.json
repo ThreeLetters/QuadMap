@@ -1,5 +1,5 @@
 {
-  "name": "QuadTreeMap",
+  "name": "QuadMap",
   "version": "1.0.1",
   "description": "A map styled quadtree",
   "main": "index.js",
