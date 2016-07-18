@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/AJS-development/QuadTreeMap.git"
+    "url": "git://github.com/AJS-development/QuadMap.git"
   },
   "keywords": [
     "quadtree",
