@@ -19,7 +19,7 @@ getNodes(progressive) {
   var final = new FastMap();
   if (progressive) {
     this.walk().forEach((node,id)=>{
-final.set(id,node);
+final.set(id,node.node);
 })
 return final;
   }
@@ -98,7 +98,7 @@ getAverageQuad(nodes) {
   var list = [];
   nodes.forEach((node)=>{
    var pos = node.node[this.config.positionkey]
-  list.push(test(pos))c;
+  list.push(test(pos));
   });
   
   return mode(list); 
