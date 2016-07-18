@@ -16,7 +16,7 @@
    */
 var QuadTree = require('./Quadtree.js');
 
-module.exports = class QuadTreeMap {
+module.exports = class QuadMap {
   constructor(top,bottom,left,right) {
     this.top = top;
     this.bottom = bottom;
