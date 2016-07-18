@@ -37,6 +37,12 @@ getNodes(progressive) {
 final.set(id,node.node);
 })
 return final;
+  } else {
+   this.nodes.forEach((node,id)=>{
+final.set(id,node.node);
+})
+return final;
+   
   }
   
 }
