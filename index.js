@@ -42,7 +42,7 @@ module.exports = class QuadTreeMap {
   useQuad(state) {
     this.useQuad = state
   }
-  setMaxBound(numb) {
+  setMaxLevel(numb) {
     this.config.maxQuad = numb;
   }
   set(key,data) {
