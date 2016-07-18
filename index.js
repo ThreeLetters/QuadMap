@@ -26,20 +26,20 @@ module.exports = class QuadTreeMap {
     this.config.maxQuad = numb;
   }
   set(key,data) {
-    
+    this.quadtree.setNode(key,data)
     
   }
   forEach(callback) {
-    
+    return this.quadtree.allNodes.forEach(callback);
     
   }
   every(callback) {
-    
+    return this.quadtree.allNodes.forEach(callback)
     
   }
   keys() {
     
-    return this.quadtree.keys();
+    return this.quadtree.allNodes.keys();
   }
   getQuadBox(box) {
     return this.quadtree.getQuad(null,box)
