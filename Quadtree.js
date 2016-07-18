@@ -227,7 +227,7 @@ destroy() {
     this.parent.setNode(id,node);
     
   })
-  this.parent.destroyQuad(this.numb);
+  this.parent.destroyQuadNumb(this.numb);
 }
 delete(id) {
 
