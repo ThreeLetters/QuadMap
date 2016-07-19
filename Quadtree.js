@@ -43,8 +43,9 @@ set(id,node) {
 update() {
  this.quads.forEach((quad)=>{
   quad.update();
- })
- 
+ });
+ this.checkForCreation();
+ this.checkForDeletion();
 }
 getNodes(progressive,keep) {
   var final = new FastMap();
@@ -89,9 +90,30 @@ getInnQuads(result) {
   })
   
 }
-setNode(id,node) {
+addToMList(id,node) {
+ if (this.level != 0 && !this.parent) return false;
+ if (this.level != 0) return this.parent.addToMList(id,node)
+ this.allnodes.set(node)
+ this.allNodes.set(node.node);
+ return true;
+}
 
-  var compiled = false;
+setNode(id,node) {
+ if (node.compiled && node.stored) {
+  var quad = this.getQuad(node.node);
+  return quad.setnode(id,node);
+ }
+ if (node.compiled) {
+ node.stored = this.addToMList(id,node);
+   var quad = this.getQuad(node.node);
+  return quad.setnode(id,node);
+ }
+var comp = this.compile(node,this);
+comp.stored = this.addToMList(id,comp);
+  var quad = this.getQuad(comp.node);
+  return quad.setnode(id,comp);
+  
+ /*
   if (this.level == 0) {
     compiled = (node.compiled) ? node : this.compile(node,this);
     this.allnodes.set(id,compiled);
@@ -103,6 +125,7 @@ setNode(id,node) {
 setTimeout(function () { 
  quad.setnode(id,node);
 }.bind(this),Math.floor(Math.random * 100));
+*/
 }
 getAverageQuad(nodes) {
  var mode = function(array)
@@ -209,14 +232,12 @@ compile(node,qtree) {
     QTree: qtree,
     node: node,
     compiled: true,
+    stored: false,
   };
 }
 setnode(id,node) {
- 
-    if (node.compiled) 
-      this.seto(id,node);
-    else
-  this.setn(id,node);
+ node.QTree = this;
+    this.nodes.set(id,node);
 
 }
 destroy() {
@@ -244,7 +265,6 @@ deleteNode(id) {
 removeNode(id,progressive) {
   this.nodes.delete(id);
  
-  this.checkForRemoval();
   if (progressive) {
     this.quads.forEach((quad)=>{quad.removeNode(id,true)});
   } 
@@ -253,48 +273,24 @@ destroyQuadNumb(num) {
   this.quads.delete(num);
   
 }
-checkForRemoval() {
+checkForDeletion() {
 if (this.level == 0) return;
    if (this.parent.nodes.length + this.parent.quads.length + this.nodes.length - 1 <= 4 && this.quads.length <= 0 && this.level != 0) {
       this.destroy()
       return;
     }
 }
-checkForOthers() {
-  var check = function() {
+checkForCreation() {
    
   if (this.nodes.length + this.quads.length <= 4 || this.nodes.length <= 0 || this.level < this.config.maxQuad) return true; 
    var newq = this.createQuad(this.getAverageQuad(this.nodes));
    this.quads.set(newq.numb,newq);
     this.nodes.forEach((node)=>{if (newq.doesFit(node.node[this.config.positionkey])) this.relocate(id,node,newq)});
  
-  if (this.nodes.length + this.quads.length > 4) check();
-  }.bind(this)
+ 
 
-  check();
 }
-seto(id,node) {
-  if (node.QTree) {
-    node.QTree.removeNode(id);
-  }
-  node.QTree = this;
-  this.nodes.set(id,node);
-}
-stmasit(id,com) {
-  if (!this.parent && this.level != 0) return false;
-  if (!this.parent && this.level == 0) {
-    this.allnodes.set(id,com);
-    
-  }
-  
-  this.parent.stmasit(id,com);
-}
-setn(id,node) {
- var co = this.compile(node,this)
-  if (this.level != 0) this.stmasit(co); else this.allnodes.set(id,co);
-  
-  return this.nodes.set(id,co);
-}
+
 relocate(id,node,quad) {
   this.removeNode(id);
  return quad.setNode(id,node);
