@@ -16,3 +16,4 @@ every(callback)              |  every
 keys()                       |  Get all the keys
 delete(id)                   |  Delete a item by its key
 setIntTime(time)             |  Set the time for the create/delete loop
+toArray()                    |  Returns an array of the values
