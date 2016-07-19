@@ -222,6 +222,7 @@ clear(c) {
   if (!c) this.allnodes.clear();
 }
 nodeInt() {
+console.log("update " + this.level + " | " +  this.nodes.length + " | " + this.quads.length);
 this.quads.forEach((quad)=>{
 
 quad.nodeInt();
@@ -232,11 +233,17 @@ quad.nodeInt();
 if (this.parent && !this.parent.doesFit(node.node[this.config.positionkey])) var quad = this.getMQuad(node);
 else
     var quad = this.getQuad(node);
+if (!quad) return;
     quad.setnode(id,node);
    })
    
   
 
+}
+getMaster() {
+ if (this.level != 0) return this.parent.getMaster();
+ return this;
+ 
 }
 getQuadAdvanced(node,box) {
 
@@ -254,8 +261,8 @@ compile(node,qtree) {
   };
 }
 setnode(id,node) {
-if (node.QTree == this) return;
 this.nodes.set(id,node);
+if (node.QTree == this) return;
 node.QTree.nodes.delete(id);
  node.QTree = this;
     
@@ -386,7 +393,8 @@ return quad
   } else {
     if (node.compiled) node = node.node;
   var quad = this.getquad(node[this.config.positionkey]);
-return quad
+if (node.owner) if (quad) node.owner.name = quad.level + " " + quad.nodes.length + " " + quad.quads.length; else node.owner.name = "false"
+ return quad
   }
 
 
