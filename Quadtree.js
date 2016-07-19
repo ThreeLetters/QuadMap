@@ -40,6 +40,9 @@ return false;
 set(id,node) {
  return this.setNode(id,node)
 }
+getQuadBox(box) {
+    return this.getQuad(null,box)
+  }
 update() {
  this.quads.forEach((quad)=>{
   quad.update();
