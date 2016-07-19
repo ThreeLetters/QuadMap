@@ -223,6 +223,7 @@ reSort() {
 clear(c) {
   this.quads.clear();
   this.nodes.clear();
+
   this.allnodes.forEach((node)=>{node.QTree = this;});
   if (!c) this.allnodes.clear();
 }
@@ -232,10 +233,11 @@ compile(node,qtree) {
     QTree: qtree,
     node: node,
     compiled: true,
-    stored: false,
+    stored: false
   };
 }
 setnode(id,node) {
+if (node.QTree != this) node.QTree.nodes.delete(id);
  node.QTree = this;
     this.nodes.set(id,node);
 
@@ -280,12 +282,18 @@ if (this.level == 0) return;
       return;
     }
 }
+
 checkForCreation() {
    
-  if (this.nodes.length + this.quads.length <= 4 || this.nodes.length <= 0 || this.level < this.config.maxQuad) return true; 
+  if (this.nodes.length + this.quads.length <= 4 || this.nodes.length <= 0 || this.level >= this.config.maxQuad) return true; 
    var newq = this.createQuad(this.getAverageQuad(this.nodes));
+if (!newq) return this.nodes.forEach((node)=>{
+var quad = this.getQuad(node);
+if (quad != node.QTree)
+    node.QTree.relocate(id,node,quad);
+});
    this.quads.set(newq.numb,newq);
-    this.nodes.forEach((node)=>{if (newq.doesFit(node.node[this.config.positionkey])) this.relocate(id,node,newq)});
+    this.nodes.forEach((node,id)=>{if (newq.doesFit(node.node[this.config.positionkey])) this.relocate(id,node,newq)});
  
  
 
@@ -330,7 +338,6 @@ doesFitBox(box) {
 }
 
 getquad(pos,box) {
- var quad = [];
 var test = (box) ? this.doesFitBox(box) : this.doesFit(pos);
  if (!test && this.level != 0) return false;
  this.quads.forEach((quad)=>{
