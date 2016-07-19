@@ -17,3 +17,16 @@ keys()                       |  Get all the keys
 delete(id)                   |  Delete a item by its key
 setIntTime(time)             |  Set the time for the create/delete loop
 toArray()                    |  Returns an array of the values
+
+
+
+#### getNodes(progressive,include)
+Gets the nodes in a quad. If progressive is true, then any nodes in quads under the quad will also be included. if include is true, then it will return an onject like below.
+> {
+> node: node,
+> QTree: quad,
+> compiled: true,
+> stored: true,
+>}
+
+The original node can be found in the .node variable, and the QTree is the quad it resides in. Compiled and stored are system variables.
