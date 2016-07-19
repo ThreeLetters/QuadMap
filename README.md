@@ -4,6 +4,12 @@ A map-styled quadtree. (uses collections/fast-map)
 
 [![Build Status](https://travis-ci.org/AJS-development/QuadMap.svg?branch=master)](https://travis-ci.org/AJS-development/QuadMap)
 
+
+## Installation
+
+> npm install QuadMap
+
+
 ## Documentation
 
                     Function | Docs 
