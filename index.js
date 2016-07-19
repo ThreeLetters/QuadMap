@@ -22,12 +22,22 @@ module.exports = class QuadMap {
     this.bottom = bottom;
     this.left = left;
     this.right = right;
+    
     this.config = {
       maxQuad: 12,
       positionkey: "position",
       useQuad: true,
     }
     this.quadtree = new QuadTree(top,bottom,left,right,0,false,0,this.config);
+    this.interval = setInterval(function () {
+     this.quadtree.update();
+    }.bind(this),700);
+  }
+  setIntTime(time) {
+   clearInterval(this.interval);
+    this.interval = setInterval(function () {
+     this.quadtree.update();
+    }.bind(this),time);
   }
   get(key) {
     return this.quadtree.get(key);
