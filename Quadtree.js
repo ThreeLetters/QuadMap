@@ -93,8 +93,8 @@ getInnQuads(result) {
 addToMList(id,node) {
  if (this.level != 0 && !this.parent) return false;
  if (this.level != 0) return this.parent.addToMList(id,node)
- this.allnodes.set(node)
- this.allNodes.set(node.node);
+ this.allnodes.set(id,node)
+ this.allNodes.set(id,node.node);
  return true;
 }
 
