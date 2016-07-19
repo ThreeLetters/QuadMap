@@ -30,3 +30,9 @@ Gets the nodes in a quad. If progressive is true, then any nodes in quads under 
 >}
 
 The original node can be found in the .node variable, and the QTree is the quad it resides in. Compiled and stored are system variables.
+
+#### getQuad(node)
+Returns the quad it would be in based apon its position.
+
+#### getQuadBox(box)
+Returns the quad that the box fits in
