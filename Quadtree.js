@@ -285,16 +285,26 @@ if (this.level == 0) return;
       return;
     }
 }
+sort() {
+ this.nodes.forEach((node)=>{
+var quad = this.getQuad(node);
+if (quad != node.QTree)
+    node.QTree.relocate(id,node,quad);
+    else if (!node.QTree) {
+     node.QTree = quad;
+     quad.nodes.set(node);
+    }
+});
+ 
+ 
+}
 
 checkForCreation() {
    
   if (this.nodes.length + this.quads.length <= 4 || this.nodes.length <= 0 || this.level >= this.config.maxQuad) return true; 
    var newq = this.createQuad(this.getAverageQuad(this.nodes));
-if (!newq) return this.nodes.forEach((node)=>{
-var quad = this.getQuad(node);
-if (quad != node.QTree)
-    node.QTree.relocate(id,node,quad);
-});
+if (!newq) return this.sort()
+
    this.quads.set(newq.numb,newq);
     this.nodes.forEach((node,id)=>{if (newq.doesFit(node.node[this.config.positionkey])) this.relocate(id,node,newq)});
  
