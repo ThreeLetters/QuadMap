@@ -19,7 +19,11 @@ keys()                       |  Get all the keys
 delete(id)                   |  Delete a item by its key
 setIntTime(time)             |  Set the time for the create/delete loop
 toArray()                    |  Returns an array of the values
-
+getQuad(node)                |  Returns the quad that the node qualifies
+getQuadBox(box)              |  Returns the quad the box fits in
+updatePos(id)                |  Updates the nodes quad in the system
+reSort()                     |  Clears the system and readds them
+clear(recursive)             |  Clears the quad
 
 
 #### getNodes(progressive,include)
