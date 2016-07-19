@@ -59,10 +59,8 @@ getNodes(progressive,keep) {
     
     
    }
-   if (keep) final = this.walk(); else this.walk().forEach((node,id)=>{
-final.set(id,node.node);
-});
-return final;
+   final = this.walk(keep)
+return final
   } else {
    if (keep) final = this.nodes; else this.nodes.forEach((node,id)=>{
 final.set(id,node.node);
@@ -72,10 +70,14 @@ return final;
   }
   
 }
-walk() {
-var list = this.nodes;
+walk(keep) {
+var list = new FastMap()
+this.nodes.forEach((node,id)=>{
+if (!keep) node = node.node;
+list.set(id,node)
+});
 this.quads.forEach((quad)=>{
-list.concat(quad.walk())
+list.concat(quad.walk(keep))
 });
 
 
@@ -166,6 +168,7 @@ getAverageQuad(nodes) {
   }.bind(this)
   var list = [];
   nodes.forEach((node)=>{
+if (!node) return;
    var pos = node.node[this.config.positionkey]
   list.push(testa(pos));
   });
@@ -230,7 +233,24 @@ clear(c) {
   this.allnodes.forEach((node)=>{node.QTree = this;});
   if (!c) this.allnodes.clear();
 }
+nodeInt() {
+this.quads.forEach((quad)=>{
 
+quad.nodeInt();
+
+});
+   this.nodes.forEach((node,id)=>{
+   if (!node) return;
+if (this.parent && !this.parent.doesFit(node.node[this.config.positionkey])) var quad = this.getMQuad(node);
+else
+    var quad = this.getQuad(node);
+if (quad && quad != node.QTree)
+    node.QTree.relocate(id,node,quad);
+   })
+   
+  
+
+}
 compile(node,qtree) {
   return {
     QTree: qtree,
@@ -240,15 +260,18 @@ compile(node,qtree) {
   };
 }
 setnode(id,node) {
+this.nodes.set(id,node);
 if (node.QTree != this) node.QTree.nodes.delete(id);
  node.QTree = this;
-    this.nodes.set(id,node);
+    
 
 }
 destroy() {
   
   this.nodes.forEach((node,id)=>{
-    this.parent.setNode(id,node);
+this.nodes.delete(id);
+node.QTree = this.parent;
+    this.parent.nodes.set(id,node);
     
   })
   this.parent.destroyQuadNumb(this.numb);
@@ -286,14 +309,12 @@ if (this.level == 0) return;
     }
 }
 sort() {
- this.nodes.forEach((node)=>{
+ this.nodes.forEach((node,id)=>{
 var quad = this.getQuad(node);
-if (quad != node.QTree)
-    node.QTree.relocate(id,node,quad);
-    else if (!node.QTree) {
-     node.QTree = quad;
-     quad.nodes.set(node);
-    }
+if (!quad) return;
+quad.nodes.set(id,node);
+if (node.QTree) node.QTree.nodes.delete(id);
+this.nodes.delete(id);
 });
  
  
@@ -303,18 +324,25 @@ checkForCreation() {
    
   if (this.nodes.length + this.quads.length <= 4 || this.nodes.length <= 0 || this.level >= this.config.maxQuad) return true; 
    var newq = this.createQuad(this.getAverageQuad(this.nodes));
-if (!newq) return this.sort()
-
+if (!newq) return this.sort();
    this.quads.set(newq.numb,newq);
-    this.nodes.forEach((node,id)=>{if (newq.doesFit(node.node[this.config.positionkey])) this.relocate(id,node,newq)});
  
- 
+ this.sort();
 
 }
 
 relocate(id,node,quad) {
+if (!quad) return
+try{
+quad.nodes.set(id,node);
+
+
+} catch (e) {
+
+console.log(quad)
+}
   this.removeNode(id);
- return quad.setNode(id,node);
+ 
 }
 hasItem(id) {
   return this.nodes.has(id);
@@ -351,23 +379,36 @@ doesFitBox(box) {
 }
 
 getquad(pos,box) {
+var aquad = false;
 var test = (box) ? this.doesFitBox(box) : this.doesFit(pos);
  if (!test && this.level != 0) return false;
- this.quads.forEach((quad)=>{
-  var aquad = quad.getquad(pos,box)
-  if (aquad) return aquad
- })
+ this.quads.every((quad)=>{
+  var bquad = quad.getquad(pos,box);
+if (bquad)  {
+aquad = bquad;
+return false;
+}
+return true;
+ });
+if (aquad) return aquad;
  return this;
+
+}
+getMQuad(node,box) {
+if (this.level != 0) return this.parent.getMQuad(node,box);
+return this.getQuad(node,box);
 
 }
 getQuad(node,box) {
   
   if (box) {
-    return this.getquad(false,box);
+    var quad = this.getquad(false,box);
+return quad
   } else {
     if (node.compiled) node = node.node;
-  return this.getquad(node[this.config.positionkey]);
-  
+  var quad = this.getquad(node[this.config.positionkey]);
+if (node.owner) if (quad) node.owner.name = quad.level + " " + quad.nodes.length + " " + quad.quads.length; else node.owner.name = "false"
+ return quad
   }
 
 
