@@ -14,3 +14,5 @@ setMaxLevel(number)          |  Maximum amount of levels
 forEach(callback)            |  forEach
 every(callback)              |  every
 keys()                       |  Get all the keys
+delete(id)                   |  Delete a item by its key
+setIntTime(time)             |  Set the time for the create/delete loop
