@@ -83,18 +83,6 @@ list.concat(quad.walk(keep))
 
 return list;
 }
-getInnQuads(result) {
-  this.nodes.forEach((node)=>{
-    result.set(id,node)
-    
-  })
-  this.quads.forEach((quad)=>{
-    quad.getInnQuads(result)
-    
-    
-  })
-  
-}
 addToMList(id,node) {
  if (this.level != 0 && !this.parent) return false;
  if (this.level != 0) return this.parent.addToMList(id,node)
@@ -105,17 +93,17 @@ addToMList(id,node) {
 
 setNode(id,node) {
  if (node.compiled && node.stored) {
-  var quad = this.getQuad(node.node);
+  var quad = this.getQuadAdvanced(node.node);
   return quad.setnode(id,node);
  }
  if (node.compiled) {
  node.stored = this.addToMList(id,node);
-   var quad = this.getQuad(node.node);
+   var quad = this.getQuadAdvanced(node.node);
   return quad.setnode(id,node);
  }
 var comp = this.compile(node,this);
 comp.stored = this.addToMList(id,comp);
-  var quad = this.getQuad(comp.node);
+  var quad = this.getQuadAdvanced(comp.node);
   return quad.setnode(id,comp);
   
  /*
@@ -244,12 +232,18 @@ quad.nodeInt();
 if (this.parent && !this.parent.doesFit(node.node[this.config.positionkey])) var quad = this.getMQuad(node);
 else
     var quad = this.getQuad(node);
-if (quad && quad != node.QTree)
-    node.QTree.relocate(id,node,quad);
+    quad.setnode(id,node);
    })
    
   
 
+}
+getQuadAdvanced(node,box) {
+
+if (this.parent && !this.parent.doesFit(node.node[this.config.positionkey])) var quad = this.getMQuad(node);
+else
+    var quad = this.getQuad(node);
+return quad;
 }
 compile(node,qtree) {
   return {
@@ -260,8 +254,9 @@ compile(node,qtree) {
   };
 }
 setnode(id,node) {
+if (node.QTree == this) return;
 this.nodes.set(id,node);
-if (node.QTree != this) node.QTree.nodes.delete(id);
+node.QTree.nodes.delete(id);
  node.QTree = this;
     
 
@@ -312,9 +307,7 @@ sort() {
  this.nodes.forEach((node,id)=>{
 var quad = this.getQuad(node);
 if (!quad) return;
-quad.nodes.set(id,node);
-if (node.QTree) node.QTree.nodes.delete(id);
-this.nodes.delete(id);
+quad.setnode(id,node);
 });
  
  
@@ -331,19 +324,6 @@ if (!newq) return this.sort();
 
 }
 
-relocate(id,node,quad) {
-if (!quad) return
-try{
-quad.nodes.set(id,node);
-
-
-} catch (e) {
-
-console.log(quad)
-}
-  this.removeNode(id);
- 
-}
 hasItem(id) {
   return this.nodes.has(id);
 }
@@ -352,9 +332,8 @@ updatePos(id) {
   if (this.level != 0) return false;
  var node = this.allnodes.get(id);
  if (!node) return false;
-    var quad = this.getQuad(node);
-if (quad != node.QTree)
-    node.QTree.relocate(id,node,quad);
+    var quad = this.getQuadAdvanced(node);
+    quad.setnode(id,node)
 }
 doesFit(position) {
   var x = position.x;
