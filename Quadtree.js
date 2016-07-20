@@ -94,17 +94,17 @@ addToMList(id,node) {
 
 setNode(id,node) {
  if (node.compiled && node.stored) {
-  var quad = this.getQuadAdvanced(node.node);
+  var quad = this.getQuadAdvanced(this.getPos(node));
   return quad.setnode(id,node);
  }
  if (node.compiled) {
  node.stored = this.addToMList(id,node);
-   var quad = this.getQuadAdvanced(node.node);
+   var quad = this.getQuadAdvanced(this.getPos(node));
   return quad.setnode(id,node);
  }
 var comp = this.compile(node,this);
 comp.stored = this.addToMList(id,comp);
-  var quad = this.getQuadAdvanced(comp.node);
+  var quad = this.getQuadAdvanced(this.getPos(node));
   return quad.setnode(id,comp);
   
  /*
@@ -231,7 +231,7 @@ quad.nodeInt();
    this.nodes.forEach((node,id)=>{
    if (!node) return;
    if (this.config.test) if (!this.config.test(id,node)) return;
-    var quad = this.getQuadAdvanced(node);
+    var quad = this.getQuadAdvanced(this.getPos(node));
 if (!quad) return;
     quad.setnode(id,node);
    })
@@ -244,12 +244,12 @@ getMaster() {
  return this;
  
 }
-getQuadAdvanced(node,box) {
+getQuadAdvanced(pos,box) {
 
-if (this.parent && !this.parent.doesFit(node.node[this.config.positionkey])) var quad = this.getMQuad(node);
+if (this.parent && !this.parent.doesFit(pos)) var quad = this.getMQuad(pos);
 else {
-    var quad = this.getQuad(node);
- if (!quad)quad = this.parent.getQuad(node)   
+    var quad = this.getQuad(pos);
+ if (!quad)quad = this.parent.getQuad(pos)   
     
 }
 return quad;
@@ -314,7 +314,7 @@ if (this.level == 0) return;
 }
 sort() {
  this.nodes.forEach((node,id)=>{
-var quad = this.getQuad(node);
+var quad = this.getQuad(this.getPos(node));
 if (!quad) return;
 quad.setnode(id,node);
 });
@@ -341,7 +341,7 @@ updatePos(id) {
   if (this.level != 0) return false;
  var node = this.allnodes.get(id);
  if (!node) return false;
-    var quad = this.getQuadAdvanced(node);
+    var quad = this.getQuadAdvanced(this.getPos(node));
     quad.setnode(id,node)
 }
 doesFit(position) {
@@ -387,14 +387,18 @@ if (this.level != 0) return this.parent.getMQuad(node,box);
 return this.getQuad(node,box);
 
 }
-getQuad(node,box) {
+getPos(node) {
+ if (node.compiled) node = node.node;
+ return node[this.config.positionkey]
+}
+getQuad(pos,box) {
   
   if (box) {
     var quad = this.getquad(false,box);
 return quad
   } else {
     if (node.compiled) node = node.node;
-  var quad = this.getquad(node[this.config.positionkey]);
+  var quad = this.getquad(pos);
 // if (node.owner) if (quad) node.owner.name = quad.level + " " + quad.nodes.length + " " + quad.quads.length; else node.owner.name = "false"
  return quad
   }
