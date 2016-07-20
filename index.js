@@ -27,11 +27,36 @@ module.exports = class QuadMap {
       maxQuad: 12,
       positionkey: "position",
       useQuad: true,
+      test: false,
     }
     this.quadtree = new QuadTree(top,bottom,left,right,0,false,0,this.config);
     this.interval = setInterval(function () {
      this.quadtree.update();
     }.bind(this),700);
+    this.nodeint = setInterval(function() {
+     
+     this.quadtree.nodeInt()
+    }.bind(this),500)
+  }
+  setTest(test) {
+   this.config.test = test;
+  }
+  clearNodeInt() {
+   try {
+   clearInterval(this.nodeint);
+   return true
+   } catch (e) {
+    return false
+   }
+   
+  }
+  setNodeIntTime(time) {
+   clearInterval(this.nodeint)
+   this.nodeint = setInterval(function() {
+     
+     this.quadtree.nodeInt()
+    }.bind(this),time)
+   
   }
   setIntTime(time) {
    clearInterval(this.interval);
