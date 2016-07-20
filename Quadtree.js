@@ -229,6 +229,7 @@ quad.nodeInt();
 });
    this.nodes.forEach((node,id)=>{
    if (!node) return;
+   if (this.config.test) if (!this.config.test(id,node)) return;
     var quad = this.getQuadAdvanced(node);
 if (!quad) return;
     quad.setnode(id,node);
