@@ -129,8 +129,8 @@ return this.quadtree.clear(a)
   getQuadBox(box) {
     return this.quadtree.getQuad(null,box)
   }
-  getQuad(node) {
-   return this.quadtree.getQuad(node)
+  getQuad(pos) {
+   return this.quadtree.getQuad(pos)
     
   }
   setPosVar(va) {
