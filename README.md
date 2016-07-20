@@ -12,27 +12,25 @@ A map-styled quadtree. (uses collections/fast-map)
 
 ## Documentation
 
-                    Function | Docs 
------------------------------|--------------------------------
-get(key)                     |  Get an item using its key
-set(key,node)                |  Insert an item by a key
-getNodes(progressive,include)|  Get nodes the nodes in a Quad
-useQuad(state)               |  Wether to use the quad-system or not
-setMaxLevel(number)          |  Maximum amount of levels
-forEach(callback)            |  forEach
-every(callback)              |  every
-keys()                       |  Get all the keys
-delete(id)                   |  Delete a item by its key
-setIntTime(time)             |  Set the time for the create/delete loop
-toArray()                    |  Returns an array of the values
-getQuad(node)                |  Returns the quad that the node qualifies
-getQuadBox(box)              |  Returns the quad the box fits in
-updatePos(id)                |  Updates the nodes quad in the system
-reSort()                     |  Clears the system and readds them
-clear(recursive)             |  Clears the quad
+#### Quadmap.prototye.set(id,node)
+Insert an item
 
+#### Quadmap.prototype.get(id)
+returns the item based on its id.
 
-#### getNodes(progressive,include)
+#### Quadmap.prototype.delete(id)
+deleted the node based apon its id
+
+#### Quadmap.prototype.clear(id)
+clears the quadmap/quad
+
+#### Quadmap.prototype.getQuad(pos)
+gets the quad based apon the pos
+
+#### Quadmap.prototype.getQuadBox(box)
+gets the quad the box fits into
+
+#### Quadmap.prototype.getNodes(progressive,include)
 Gets the nodes in a quad. If progressive is true, then any nodes in quads under the quad will also be included. if include is true, then it will return an onject like below.
 > {
 > node: node,
@@ -43,8 +41,8 @@ Gets the nodes in a quad. If progressive is true, then any nodes in quads under 
 
 The original node can be found in the .node variable, and the QTree is the quad it resides in. Compiled and stored are system variables.
 
-#### getQuad(node)
+#### Quadmap.prototype.getQuad(node)
 Returns the quad it would be in based apon its position.
 
-#### getQuadBox(box)
+#### Quadmap.prototype.getQuadBox(box)
 Returns the quad that the box fits in
