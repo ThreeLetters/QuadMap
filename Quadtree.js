@@ -85,7 +85,8 @@ return list;
 }
 addToMList(id,node) {
  if (this.level != 0 && !this.parent) return false;
- if (this.level != 0) return this.parent.addToMList(id,node)
+ if (this.level != 0) return this.parent.addToMList(id,node);
+ this.config.main["length"] = this.allNodes.length;
  this.allnodes.set(id,node)
  this.allNodes.set(id,node.node);
  return true;
@@ -289,7 +290,7 @@ deleteNode(id) {
     return;
   }
   this.removeNode(id,true);
-  
+  this.config.main["length"] = this.allNodes.length;
       this.allnodes.delete(id);
    this.allNodes.delete(id);
 }
