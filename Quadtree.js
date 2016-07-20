@@ -222,7 +222,6 @@ clear(c) {
   if (!c) this.allnodes.clear();
 }
 nodeInt() {
-console.log("update " + this.level + " | " +  this.nodes.length + " | " + this.quads.length);
 this.quads.forEach((quad)=>{
 
 quad.nodeInt();
@@ -230,9 +229,7 @@ quad.nodeInt();
 });
    this.nodes.forEach((node,id)=>{
    if (!node) return;
-if (this.parent && !this.parent.doesFit(node.node[this.config.positionkey])) var quad = this.getMQuad(node);
-else
-    var quad = this.getQuad(node);
+    var quad = this.getQuadAdvanced(node);
 if (!quad) return;
     quad.setnode(id,node);
    })
@@ -248,8 +245,11 @@ getMaster() {
 getQuadAdvanced(node,box) {
 
 if (this.parent && !this.parent.doesFit(node.node[this.config.positionkey])) var quad = this.getMQuad(node);
-else
+else {
     var quad = this.getQuad(node);
+ if (!quad)quad = this.parent.getQuad(node)   
+    
+}
 return quad;
 }
 compile(node,qtree) {
@@ -393,7 +393,7 @@ return quad
   } else {
     if (node.compiled) node = node.node;
   var quad = this.getquad(node[this.config.positionkey]);
-if (node.owner) if (quad) node.owner.name = quad.level + " " + quad.nodes.length + " " + quad.quads.length; else node.owner.name = "false"
+// if (node.owner) if (quad) node.owner.name = quad.level + " " + quad.nodes.length + " " + quad.quads.length; else node.owner.name = "false"
  return quad
   }
 
