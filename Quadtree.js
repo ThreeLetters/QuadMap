@@ -343,7 +343,7 @@ hasItem(id) {
 }
 
 updatePos(id) {
-  if (this.level != 0) return false;
+  if (this.level != 0) return this.getMaster().updatePos(id);
  var node = this.allnodes.get(id);
  if (!node) return false;
     var quad = this.getQuadAdvanced(this.getPos(node));
