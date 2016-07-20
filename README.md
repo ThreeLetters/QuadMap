@@ -47,6 +47,20 @@ var quad = quadMap.getQuadById(id);
 var nodes = quad.getNodes();
 ```
 
+To get the nodes in a box
+
+```
+var box = {
+top: 20,
+bottom: 0,
+left: -1,
+right: 10,
+}
+var quad = quadMap.getQuadBox(box)
+var nodes = quad.getNodes(true);
+// Note that it is wise to set the recursive option to true, because if the box is too big for a bottom quad, then it will return a quad it fits.
+```
+
 
 To change the position variable 
 
@@ -92,8 +106,8 @@ gets the quad based apon the pos
 #### Quadmap.prototype.getQuadBox(box)
 gets the quad the box fits into
 
-#### Quadmap.prototype.getNodes(progressive,include)
-Gets the nodes in a quad. If progressive is true, then any nodes in quads under the quad will also be included. if include is true, then it will return an onject like below.
+#### Quadmap.prototype.getNodes(recursive,include)
+Gets the nodes in a quad. If recursive is true, then any nodes in quads under the quad will also be included. if include is true, then it will return an onject like below.
 > {
 > node: node,
 > QTree: quad,
