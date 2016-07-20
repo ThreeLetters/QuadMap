@@ -9,7 +9,69 @@ A map-styled quadtree. (uses collections/fast-map)
 
 > npm install QuadMap
 
+## Usage
+```
+var QuadMap = require("QuadMap");
+var quadMap = new QuadMap(top,bottom,left,right);
+```
 
+To insert a node
+
+
+```
+var QuadMap = require("QuadMap");
+var quadMap = new QuadMap(100,-100,-100,100);
+
+var node = {
+position: {x:10,y: 20},
+name: "hello",
+color: {R:0,G:0,B:0}
+node.id: id
+}
+quadMap.set(node.id,node);
+```
+
+
+To get a node
+
+
+```
+quadMap.get(id)
+```
+
+To get the nodes in the nodes quad
+
+
+```
+var quad = quadMap.getQuadById(id);
+var nodes = quad.getNodes();
+```
+
+
+To change the position variable 
+
+
+```
+var QuadMap = require("QuadMap");
+var quadMap = new QuadMap(100,-100,-100,100);
+
+var node = {
+pos: {x:10,y: 20}, // Note the var is now "pos" not "position". "position" is default
+name: "hello",
+color: {R:0,G:0,B:0}
+node.id: id
+}
+quadMap.setPosVar("pos");
+quadMap.set(node.id,node);
+```
+
+
+To change the max amount of levels
+
+
+```
+quadMap.setMaxLevel(number);
+```
 ## Documentation
 
 #### Quadmap.prototye.set(id,node)
@@ -40,9 +102,8 @@ Gets the nodes in a quad. If progressive is true, then any nodes in quads under 
 >}
 
 The original node can be found in the .node variable, and the QTree is the quad it resides in. Compiled and stored are system variables.
+#### Quadmap.prototype.setPosVar(var)
+sets the name of the variable to get a nodes pos from
 
-#### Quadmap.prototype.getQuad(node)
-Returns the quad it would be in based apon its position.
-
-#### Quadmap.prototype.getQuadBox(box)
-Returns the quad that the box fits in
+#### Quadmap.prototype.setNodeIntTime(time)
+sets the time in which the node update runs
