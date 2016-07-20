@@ -83,6 +83,11 @@ list.concat(quad.walk(keep))
 
 return list;
 }
+getQuadById(id) {
+ var master = this.getMaster();
+ var node = master.allnodes.get(id);
+return master.getQuad(master.getPos(node))
+}
 addToMList(id,node) {
  if (this.level != 0 && !this.parent) return false;
  if (this.level != 0) return this.parent.addToMList(id,node);
