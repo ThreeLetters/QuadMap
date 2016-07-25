@@ -14,6 +14,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
    */
+   const AdvFastMap = require('./AdvFastMap')
 const FastMap = require('collections/fast-map');
 const VarHolder = require('./VarHolder');
 var QTree = class QuadTree {
@@ -33,7 +34,7 @@ this.allNodes = new FastMap();
 this.vars = (vars) ? vars : [];
 }
 addVar(a) {
- if (this.level == 0) var b = new VarHolder(this,a); else var b = new FastMap();
+ if (this.level == 0) var b = new VarHolder(this,a); else var b = new AdvFastMap(this,a);
  this[a] = b;
  this.vars.push(a)
  this.quads.forEach((quad)=>{
