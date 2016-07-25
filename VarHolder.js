@@ -1,3 +1,4 @@
+"use strict";
 const FastMap = require('collections/fast-map');
 module.exports = class VarHolder {
 constructor(main,varn) {
