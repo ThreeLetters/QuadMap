@@ -318,7 +318,6 @@ deleteNode(id) {
   var b = this.allnodes.get(id);
   if (b) {
    b.vars.forEach((vars)=>{
-    b.QTree[vars].delete(id);
     this[vars].delete(id);
    })
   }
