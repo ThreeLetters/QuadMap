@@ -17,7 +17,7 @@
 const FastMap = require('collections/fast-map');
 
 var QTree = class QuadTree {
-constructor(top,bottom,left,right, level,parent,numb,config) {
+constructor(top,bottom,left,right, level,parent,numb,config,vars) {
 this.top = top;
 this.bottom = bottom;
 this.numb = numb;
@@ -30,6 +30,16 @@ this.nodes = new FastMap();
 this.config = config;
 this.allnodes = new FastMap();
 this.allNodes = new FastMap();
+this.vars = (vars) ? vars : [];
+}
+addVar(a) {
+ if (this.level == 0) var b = new VarHolder(this); else var b = new FastMap();
+ this[a] = b;
+ this.vars.push(a)
+ this.quads.forEach((quad)=>{
+  quad.addVar(a);
+  
+ })
 }
 get(id) {
  if (this.level == 0) return this.allNodes.get(id)
