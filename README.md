@@ -1,5 +1,5 @@
 # QuadMap
-A map-styled quadtree. (uses collections/fast-map)
+A map-styled quadtree. Also supports multi-variables (uses collections/fast-map)
 
 
 [![Build Status](https://travis-ci.org/AJS-development/QuadMap.svg?branch=master)](https://travis-ci.org/AJS-development/QuadMap)
@@ -86,6 +86,29 @@ To change the max amount of levels
 ```
 quadMap.setMaxLevel(number);
 ```
+
+
+To add a variable
+
+
+``quadMap.addVar("something")``
+
+
+To add a object to a variable
+
+
+```
+quadMap.something.set(id,obj); // Note this also adds it to the MASTER nodes list
+```
+
+
+To get a list of objects in a var inside a quad
+
+
+```
+var nodes = quad.something.getNodes(recursive,keep);
+```
+
 ## Documentation
 
 #### Quadmap.prototye.set(id,node)
