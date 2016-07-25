@@ -25,7 +25,7 @@ if (n && n.node == node) {
 return setn(id,node);
 }
 get(id) {
-
+return this.allNodes.get(id);
 }
 delete(id,node) {
 this.allnodes.delete(id);
@@ -38,10 +38,10 @@ if (n) {
 }
 }
 toArray() {
-
+return this.allNodes.toArray()
 }
-
-
-
+getNodes(progressive,keep) {
+if (keep) return this.allnodes; else return this.allNodes;
+}
 
 }
