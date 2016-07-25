@@ -15,7 +15,7 @@
    limitations under the License.
    */
 const FastMap = require('collections/fast-map');
-
+const VarHolder = require('./VarHolder');
 var QTree = class QuadTree {
 constructor(top,bottom,left,right, level,parent,numb,config,vars) {
 this.top = top;
