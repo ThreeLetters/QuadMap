@@ -308,7 +308,7 @@ node.vars.forEach((va)=>{
 })
 node.QTree.nodes.delete(id);
  node.QTree = this;
-    
+    if (this.config.quadv) node.node[this.config.quadv] = this;
 
 }
 destroy() {
