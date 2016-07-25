@@ -216,8 +216,15 @@ this.right = right;
   }.bind(this)
   var quad = test(number);
   if (!quad || this.quads.has(quad.numb)) return false;
-  var newq = new QTree(quad.top,quad.bottom,quad.left,quad.right,this.level + 1,this,quad.numb,this.config);
+  var newq = new QTree(quad.top,quad.bottom,quad.left,quad.right,this.level + 1,this,quad.numb,this.config,this.vars);
+  newq.init();
   return newq;
+}
+init() {
+ this.vars.forEach((va)=>{
+  this[va] = new AdvFastMap(this,va);
+  
+ })
 }
 resize(top,bottom,left,right) {
   this.top = top;
@@ -308,6 +315,13 @@ deleteNode(id) {
   }
   this.removeNode(id,true);
   this.config.main["length"] = this.allNodes.length;
+  var b = this.allnodes.get(id);
+  if (b) {
+   b.vars.forEach((vars)=>{
+    b.QTree[vars].delete(id);
+    this[vars].delete(id);
+   })
+  }
       this.allnodes.delete(id);
    this.allNodes.delete(id);
 }
