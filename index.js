@@ -28,6 +28,7 @@ module.exports = class QuadMap {
       positionkey: "position",
       useQuad: true,
       test: false,
+      quadv: false,
       main: this,
     }
     this.quadtree = new QuadTree(top,bottom,left,right,0,false,0,this.config);
@@ -38,6 +39,9 @@ module.exports = class QuadMap {
      
      this.quadtree.nodeInt()
     }.bind(this),500)
+  }
+  setQuadVar(a) {
+   this.config.quadv = a;
   }
   update() {
    this.quadtree.update();
