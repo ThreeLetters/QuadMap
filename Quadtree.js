@@ -288,6 +288,10 @@ compile(node,qtree) {
 }
 setnode(id,node) {
 this.nodes.set(id,node);
+node.vars.forEach((va)=>{
+ this[va].set(id,node);
+ 
+})
 if (node.QTree == this) return;
 node.QTree.nodes.delete(id);
  node.QTree = this;
