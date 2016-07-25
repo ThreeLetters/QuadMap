@@ -33,6 +33,18 @@ this.allnodes = new FastMap();
 this.allNodes = new FastMap();
 this.vars = (vars) ? vars : [];
 }
+deleteVar(a) {
+ this.nodes.forEach((node)=>{
+   var ind = node.vars.indexOf(a);
+   if (ind != -1) node.vars.slice(ind,1);
+ })
+  var ind = this.vars.indexOf(a);
+ if (ind != -1) this.vars.slice(ind,1);
+ this[a] = null;
+ this.quads.forEach((quad)=>{
+  quad.deleteVar(a);
+ })
+}
 addVar(a) {
  if (this.level == 0) var b = new VarHolder(this,a); else var b = new AdvFastMap(this,a);
  this[a] = b;
