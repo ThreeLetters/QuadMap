@@ -46,6 +46,10 @@ module.exports = class QuadMap {
   nodeInt() {
    this.quadtree.nodeInt();
   }
+  addVar(a) {
+   this.quadtree.addVar(a);
+   this[a] = this.quadtree[a];
+  }
   setTest(test) {
    this.config.test = test;
   }
