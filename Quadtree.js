@@ -33,7 +33,7 @@ this.allNodes = new FastMap();
 this.vars = (vars) ? vars : [];
 }
 addVar(a) {
- if (this.level == 0) var b = new VarHolder(this); else var b = new FastMap();
+ if (this.level == 0) var b = new VarHolder(this,a); else var b = new FastMap();
  this[a] = b;
  this.vars.push(a)
  this.quads.forEach((quad)=>{
@@ -274,7 +274,8 @@ compile(node,qtree) {
     QTree: qtree,
     node: node,
     compiled: true,
-    stored: false
+    stored: false,
+    vars: [],
   };
 }
 setnode(id,node) {
