@@ -27,7 +27,7 @@ return setn(id,node);
 get(id) {
 return this.allNodes.get(id);
 }
-delete(id,node) {
+delete(id) {
 this.allnodes.delete(id);
 this.allNodes.delete(id);
 var n = this.main.allnodes.get(id);
