@@ -51,10 +51,53 @@ module.exports = class QuadMap {
    this.quadtree.nodeInt();
   }
   addVar(a) {
+   var bad = [
+    "quadtree",
+    "top",
+    "bottom",
+    "left",
+    "right",
+    "length",
+    "config",
+   "interval",
+    "nodeint",
+    "numb",
+    "level",
+    "parent",
+    "quads",
+    "nodes",
+    "allnodes",
+    "allNodes",
+    "vars"
+   ]
+   if (bad.indexOf(a) != -1) 
+    throw "INVALID: " + a + " is not a valid var name. It is in the list of prohibited names";
+   
    this.quadtree.addVar(a);
    this[a] = this.quadtree[a];
   }
   deleteVar(a) {
+   var bad = [
+    "quadtree",
+    "top",
+    "bottom",
+    "left",
+    "right",
+    "length",
+    "config",
+   "interval",
+    "nodeint",
+    "numb",
+    "level",
+    "parent",
+    "quads",
+    "nodes",
+    "allnodes",
+    "allNodes",
+    "vars"
+   ]
+   if (bad.indexOf(a) != -1) 
+    throw "INVALID: " + a + " is not a valid var name. It is in the list of prohibited names";
    this[a] = null;
    this.quadtree.deleteVar(a)
   }
