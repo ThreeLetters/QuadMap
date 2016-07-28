@@ -54,7 +54,7 @@ this.allnodes.delete(id);
 this.allNodes.delete(id);
 var n = this.main.allnodes.get(id);
 if (n) {
-  n.QTree[this.varn].delete(id);
+  if (n.QTree != this.main) n.QTree[this.varn].delete(id);
   var i = n.vars.indexof(this.varn);
   if (i != -1) n.vars.slice(i,1)
 }
