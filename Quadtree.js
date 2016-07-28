@@ -310,7 +310,7 @@ compile(node,qtree) {
 }
 setnode(id,node) {
 this.nodes.set(id,node);
-
+ if (this.config.quadv) node.node[this.config.quadv] = this;
 if (node.QTree == this) return;
 node.vars.forEach((va)=>{
  this[va].set(id,node);
@@ -318,7 +318,7 @@ node.vars.forEach((va)=>{
 })
 node.QTree.nodes.delete(id);
  node.QTree = this;
-    if (this.config.quadv) node.node[this.config.quadv] = this;
+   
 
 }
 destroy() {
