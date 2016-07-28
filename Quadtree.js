@@ -290,14 +290,9 @@ getMaster() {
  
 }
 getQuadAdvanced(pos,box) {
-
-if (this.parent && !this.parent.doesFit(pos)) var quad = this.getMQuad(pos);
-else {
-    var quad = this.getQuad(pos);
- if (!quad)quad = this.parent.getQuad(pos)   
-    
-}
-return quad;
+var quad = this.getQuad(pos,box)
+if (!quad) return this.parent.getQuadAdvanced(pos,box)
+return quad
 }
 compile(node,qtree) {
   return {
