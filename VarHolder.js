@@ -20,6 +20,7 @@ this.allnodes = new FastMap()
 this.allNodes = new FastMap()
 }
 set(id,node) {
+ this["length"] = this.allnodes.length
   var setn = function(id,node) {
 var n = this.main.allnodes.get(id);
 if (n && n.node == node) {
@@ -41,6 +42,7 @@ get(id) {
 return this.allNodes.get(id);
 }
 delete(id) {
+  this["length"] = this.allnodes.length
 this.allnodes.delete(id);
 this.allNodes.delete(id);
 var n = this.main.allnodes.get(id);
