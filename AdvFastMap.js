@@ -18,7 +18,9 @@ this.ma = ma;
 this.vari = vari;
 this.nodes = new FastMap()
 }
-
+some(c) {
+ return this.nodes.some(c)
+}
 clear() {
   return this.nodes.clear()
 }
