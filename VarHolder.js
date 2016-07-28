@@ -38,6 +38,13 @@ if (n && n.node == node) {
 }.bind(this);
 return setn(id,node);
 }
+forEach(c) {
+ return this.allNodes.forEach(c)
+}
+every(c) {
+ return this.allNodes.every(c)
+ 
+}
 get(id) {
 return this.allNodes.get(id);
 }
