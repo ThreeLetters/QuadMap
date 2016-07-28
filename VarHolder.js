@@ -24,7 +24,7 @@ set(id,node) {
   var setn = function(id,node) {
 var n = this.main.allnodes.get(id);
 if (n && n.node == node) {
-  n.QTree[this.varn].set(id,node);
+  if (n.QTree != this.main) n.QTree[this.varn].set(id,node);
   if (n.vars.indexOf(this.varn) == -1) node.vars.push(this.varn);
   this.allnodes.set(id,n);
   this.allNodes.set(id,n.node);
