@@ -33,6 +33,16 @@ this.allnodes = new FastMap();
 this.allNodes = new FastMap();
 this.vars = (vars) ? vars : [];
 }
+
+clearVar(a) {
+ if (this.level != 0) this[a].clear()
+ this.quads.forEach((quad)=>{
+  quad.clearVar(a)
+  
+  
+ })
+ 
+}
 deleteVar(a) {
  this.nodes.forEach((node)=>{
    var ind = node.vars.indexOf(a);
