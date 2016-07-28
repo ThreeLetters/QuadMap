@@ -51,6 +51,9 @@ return setn(id,node);
 forEach(c) {
  return this.allNodes.forEach(c)
 }
+some(c) {
+ return this.allNodes.some(c)
+}
 every(c) {
  return this.allNodes.every(c)
  
