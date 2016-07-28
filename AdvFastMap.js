@@ -12,11 +12,35 @@
    limitations under the License.
    */
 const FastMap = require('collections/fast-map');
-module.exports = class AdvFast extends FastMap {
+module.exports = class AdvFast {
 constructor(ma,vari) {
- super(ma,vari)
 this.ma = ma;
 this.vari = vari;
+this.nodes = new FastMap()
+}
+
+clear() {
+  return this.nodes.clear()
+}
+get(id) {
+  this["length"] = this.nodes.length
+  return this.nodes.get(id)
+}
+delete(id) {
+  this["length"] = this.nodes.length
+  return this.nodes.delete(id)
+}
+set(id,node) {
+  return this.nodes.set(id,node)
+}
+toArray(){
+  return this.nodes.toArray()
+}
+every(c) {
+  return this.nodes.every(c)
+}
+forEach(c) {
+  return this.nodes.forEach(c)
 }
 getNodes (progressive,keep) {
 if (progressive) {
