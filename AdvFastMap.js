@@ -14,6 +14,7 @@
 const FastMap = require('collections/fast-map');
 module.exports = class AdvFast extends FastMap {
 constructor(ma,vari) {
+ super(ma,vari)
 this.ma = ma;
 this.vari = vari;
 }
