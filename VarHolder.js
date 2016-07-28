@@ -20,6 +20,11 @@ this.allnodes = new FastMap()
 this.allNodes = new FastMap()
 }
 clear() {
+ this.allnodes.forEach((node)=>{
+ var ind = node.vars.forEach(this.varn)
+  if (ind != -1) node.vars.slice(ind,1)
+ })
+ 
  this.allnodes.clear();
  this.allNodes.clear();
  this.main.clearVar(this.varn);
