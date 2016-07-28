@@ -444,7 +444,6 @@ getQuad(pos,box) {
     var quad = this.getquad(false,box);
 return quad
   } else {
-    if (node.compiled) node = node.node;
   var quad = this.getquad(pos);
 // if (node.owner) if (quad) node.owner.name = quad.level + " " + quad.nodes.length + " " + quad.quads.length; else node.owner.name = "false"
  return quad
