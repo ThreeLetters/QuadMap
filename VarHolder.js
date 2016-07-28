@@ -19,6 +19,11 @@ this.varn = varn;
 this.allnodes = new FastMap()
 this.allNodes = new FastMap()
 }
+clear() {
+ this.allnodes.clear();
+ this.allNodes.clear();
+ this.main.clearVar(this.varn);
+}
 set(id,node) {
  this["length"] = this.allnodes.length
   var setn = function(id,node) {
