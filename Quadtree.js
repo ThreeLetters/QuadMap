@@ -15,7 +15,7 @@
    limitations under the License.
    */
    const AdvFastMap = require('./AdvFastMap')
-const FastMap = require('collections/fast-map');
+const FastMap = require('quickmap');
 const VarHolder = require('./VarHolder');
 var QTree = class QuadTree {
 constructor(top,bottom,left,right, level,parent,numb,config,vars) {
