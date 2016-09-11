@@ -15,7 +15,7 @@
     "map"
   ],
   "dependencies": {
-    "collections": "latest"
+    "quickmap": "latest"
     
   },
   "author": "Andrew s <andrews54757@gmail.com>",
