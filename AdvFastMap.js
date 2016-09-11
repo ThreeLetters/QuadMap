@@ -11,7 +11,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
    */
-const FastMap = require('collections/fast-map');
+const FastMap = require('quickmap');
 module.exports = class AdvFast {
 constructor(ma,vari) {
 this.ma = ma;
