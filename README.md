@@ -1,3 +1,5 @@
+[![NPM] (https://img.shields.io/badge/Module-Npm-blue.svg)] (https://www.npmjs.com/package/QuadMap)
+[![Donate] (https://img.shields.io/badge/Donate-Paypal-brightgreen.svg)] (paypal.me/andrews54757)
 # QuadMap
 A map-styled quadtree. Also supports multi-variables (uses collections/fast-map)
 
